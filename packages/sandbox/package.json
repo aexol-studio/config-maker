@@ -1,0 +1,21 @@
+{
+  "name": "sandbox",
+  "private": true,
+  "version": "0.8.7",
+  "description": "CLI test",
+  "author": "Artur Czemiel",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "cli": "node lib/index.js",
+    "build":"tspc",
+    "watch":"tspc --watch"
+  },
+  "dependencies": {
+    "config-maker": "^0.0.1",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.28"
+  }
+}

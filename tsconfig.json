@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/config-maker"
+    },
+    {
+      "path": "./packages/sandbox"
+    }
+  ]
+}
