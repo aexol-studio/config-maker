@@ -12,7 +12,7 @@
     "watch": "tspc --watch"
   },
   "dependencies": {
-    "config-maker": "^0.0.1",
+    "config-maker": "^0.0.3",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
