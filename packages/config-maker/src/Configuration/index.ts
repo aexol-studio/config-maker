@@ -168,7 +168,7 @@ export class ConfigMaker<
       if (nameOfEnv) {
         const valueFromEnv = getEnvValue(nameOfEnv);
         if (valueFromEnv) {
-          returnValue = (decoderFunction?.(valueFromEnv) ||
+          return (decoderFunction?.(valueFromEnv) ||
             valueFromEnv) as ConfigurationOptions[T];
         }
       }
@@ -210,7 +210,7 @@ export class ConfigMaker<
       const decoded = decoderFunction?.(answer) || answer;
       returnValue = decoded as ConfigurationOptions[T];
     }
-    if (options?.saveOnInput) this.save();
+    if (options?.saveOnInput && returnValue) this.setValue(k, returnValue);
     return returnValue;
   };
 

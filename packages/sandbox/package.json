@@ -1,7 +1,7 @@
 {
   "name": "sandbox",
   "private": true,
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "CLI test",
   "author": "Artur Czemiel",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "watch": "tspc --watch"
   },
   "dependencies": {
-    "config-maker": "^0.0.3",
+    "config-maker": "^0.0.4",
     "yargs": "^17.7.2"
   },
   "devDependencies": {

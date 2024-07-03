@@ -1,6 +1,6 @@
 {
   "name": "config-maker",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Make interactive config for CLIs. Fetch values from command line, file, user options or environment variable.",
   "main": "lib/index.js",
   "author": "Artur Czemiel",
