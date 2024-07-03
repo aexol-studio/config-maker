@@ -159,7 +159,7 @@ export class ConfigMaker<
     const valueFromCommandLine =
       options?.commandLineProvidedOptions?.[k as string];
     if (valueFromCommandLine)
-      returnValue = (decoderFunction?.(valueFromCommandLine) ||
+      return (decoderFunction?.(valueFromCommandLine) ||
         valueFromCommandLine) as ConfigurationOptions[T];
 
     // Then we check if there is environment variable.
@@ -210,6 +210,7 @@ export class ConfigMaker<
       const decoded = decoderFunction?.(answer) || answer;
       returnValue = decoded as ConfigurationOptions[T];
     }
+    if (options?.saveOnInput) this.save();
     return returnValue;
   };
 
