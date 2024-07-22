@@ -23,7 +23,7 @@ type DefaultValues<T> = {
 };
 
 type Coders<T> = {
-  [P in keyof WithNonStringKeys<T>]: {
+  [P in keyof WithNonStringKeys<T>]?: {
     decode: (v: string) => WithNonStringKeys<T>[P];
     encode: (v: WithNonStringKeys<T>[P]) => string;
   };
@@ -152,7 +152,7 @@ export class ConfigMaker<
     const decoderFunction =
       k in this.props.decoders
         ? this.props.decoders[k as string as keyof Coders<ConfigurationOptions>]
-            .decode
+            ?.decode
         : undefined;
 
     // This is highest hierarchy argument from command line

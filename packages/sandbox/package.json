@@ -1,7 +1,7 @@
 {
   "name": "sandbox",
   "private": true,
-  "version": "0.8.9",
+  "version": "0.8.10",
   "description": "CLI test",
   "author": "Artur Czemiel",
   "license": "MIT",
