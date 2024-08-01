@@ -35,16 +35,12 @@ then create a config instance somewhere. For example in `config.ts` file.
 ```ts
 import { ConfigMaker } from 'config-maker';
 
-type UserOptions = {
-  token: string;
-};
-
 type ProjectOptions = {
   urlOrPath: string;
   vv: number;
 };
 
-export const config = new ConfigMaker<ProjectOptions, UserOptions>('myConfig', {
+export const config = new ConfigMaker<ProjectOptions>('myConfig', {
   decoders: {
     vv: {
       decode: (v) => parseInt(v),
@@ -85,8 +81,6 @@ export const config = new ConfigMaker<ProjectOptions, UserOptions>('myConfig', {
 
 ```
 Lets go throught this step by step. First generic parameter which in our case is `ProjectOptions` is what will be held inside config json file in the project folder using your CLI.
-
-Second parameter `UserOptions` is used to store global options inside users `$HOME` folder.
 
 Then `myConfig` is the config file name. It will be stored in users who is using the CLI that uses `config-maker`
 

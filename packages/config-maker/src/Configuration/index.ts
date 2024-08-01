@@ -2,7 +2,6 @@
 import fs from 'fs';
 import path from 'path';
 import inquirer, { QuestionCollection } from 'inquirer';
-import Conf from 'conf';
 import AutoCompleteInputPrompt from '@/utils/AutoCompleteInputPrompt.js';
 import { getEnvValue } from '@/common/envs.js';
 
@@ -29,16 +28,11 @@ type Coders<T> = {
   };
 };
 
-type AllOptions<C, G> = {
+type AllOptions<C> = {
   options: Partial<C>;
-  globalOptions: Partial<G>;
 };
-export class ConfigMaker<
-  ConfigurationOptions extends Record<string, any>,
-  GlobalOptions extends Record<string, any>,
-> {
+export class ConfigMaker<ConfigurationOptions extends Record<string, any>> {
   private options: Partial<ConfigurationOptions> = {};
-  private globalOptions = new Conf<GlobalOptions>({});
   private projectPath = process.cwd();
   constructor(
     public configFileName: string,
@@ -56,21 +50,11 @@ export class ConfigMaker<
       config?: {
         autocomplete?: {
           [P in keyof ConfigurationOptions]?: (
-            currentConfig: AllOptions<ConfigurationOptions, GlobalOptions>,
+            currentConfig: AllOptions<ConfigurationOptions>,
           ) => Promise<string[]>;
         };
         environment?: {
           [P in keyof ConfigurationOptions]?: string;
-        };
-      };
-      global?: {
-        autocomplete?: {
-          [P in keyof GlobalOptions]?: (
-            currentConfig: AllOptions<ConfigurationOptions, GlobalOptions>,
-          ) => Promise<string[]>;
-        };
-        environment?: {
-          [P in keyof GlobalOptions]?: string;
         };
       };
     },
@@ -187,7 +171,6 @@ export class ConfigMaker<
         const result = await AutoCompleteInputPrompt(
           await autocompleteFunction({
             options: this.options,
-            globalOptions: this.globalOptions.store,
           }),
           {
             message: optionsMessage || 'Autocomplete ' + key,
@@ -214,18 +197,6 @@ export class ConfigMaker<
     return returnValue;
   };
 
-  // get global options that are usually stored in users $HOME folder
-  getGlobalOptions = () => this.globalOptions;
-  getGlobalOptionsValue = <T extends keyof GlobalOptions>(k: T) =>
-    this.globalOptions.get(k);
-  setGlobalOptions = (opts: GlobalOptions) => this.globalOptions.set(opts);
-  updateGlobalOptions = (opts?: Partial<GlobalOptions>) => {
-    if (opts) {
-      this.globalOptions.set({ ...opts });
-    }
-  };
-  clearGlobalOptions = () => this.globalOptions.clear();
-  getGlobalOptionsPath = () => this.globalOptions.path;
   serializeConfigAsString = () =>
     Buffer.from(JSON.stringify(this.options)).toString('base64');
   deserializeConfigFromString = (serialized: string) =>
