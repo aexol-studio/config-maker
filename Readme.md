@@ -1,37 +1,150 @@
-# Config maker
+### CONFIG  MAKER ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/18e2f31f-a70f-4c3e-b284-3b66c989a15f)
+This is the config manager to use for your interactive CLI. <!--When you are making... - MISSING TEXT: when you are making what, exactly?-->
 
-Config manager for your CLI. When you are making
+<br />
 
 Features:
-- make and consume JSON config files
-- give 4 chances to input the value: as an cli option, as user input, as an autocomplete prompt, as an environment variable
+- Making and consuming JSON config files
+- Inputing the  value in 4 different ways:
+    - as a cli option
+    - as user input
+    - as an autocomplete prompt
+    - as an environment variable
 
-## How values are fetched 
+<br />
+
+## 📤 How the Values Are Fetched 
 
 ```mermaid
 graph LR
-    A[Option from command line] --> AY[Exists]
-    AY --> R[Return value]
-    A --Not present--->
+    A[Option from the Command Line] --> AY[Exists]
+    AY --> R[Return Value]
+    A --Not Present--->
     D[Environment Variable] --> AY
-    D --Not present--->
+    D --Not Present--->
     E[In Config File] -->  AY
-    E --Not present--->
-    F[Prompt for input] --> R
+    E --Not Present--->
+    F[Prompt for the Input] --> R
+
 ```
-## Where to use
 
-If you are making interactive CLI you can use config-maker. 
+<br />
 
-## How to use
 
-First of all install the config-maker package
+## 📖 How to - a Step by Step Guide
+
+#### 1. Install the config-maker package
+
+```sh
+npm i config-maker
+
+```
+
+#### 2. Create a config instance somewhere 
+
+As an example, you can do that in the `config.ts` file.
+
+`ProjectOptions` is the first generic parameter we are dealing with. It is what will be held inside the config json file in the project folder while using your CLI.
+
+Then `myConfig` is the config file name. It will be stored in users who is using the CLI that uses `config-maker`.
+
+```ts
+import { ConfigMaker } from 'config-maker';
+
+type ProjectOptions = {
+  urlOrPath: string;
+  vv: number;
+};
+
+export const config = new ConfigMaker<ProjectOptions>('myConfig', {
+
+```
+
+#### 3. (Optional)Add Decoders
+**`decoders`** - are only needed when a value is different type that string, but we want to encode it in the config.
+
+```ts
+
+  decoders: {
+    vv: {
+      decode: (v) => parseInt(v),
+      encode: (v) => v + '',
+    },
+  },
+
+```
+
+#### 4. (Optional) Add Prompts
+**`prompt`** - are optional messages that are used in text and/or in `autocomplete` prompts.
+
+```ts
+  // messages to be used for prompts
+  prompts: {
+    vv: {
+      message: 'Package version',
+    },
+    urlOrPath: {
+      message: 'Provide url or path to the file',
+    },
+  },
+  // default initial values
+  defaultValues: {
+    vv: 1,
+  },
+
+```
+
+#### 5. Autocomplete
+**`autocomplete`** - functions returning an array of strings to be used inside autocomplete
+
+```ts
+  config: {
+    // Autocomplete functions returns possible options
+    autocomplete: {
+      urlOrPath: async (p) => {
+        // if the property vv is already set
+        if (p.options.vv === 1) {
+          return ['https://aexol.com', 'https://space.com'];
+        }
+        return ['https://github.com', 'https://news.hacker.com'];
+      },
+    },
+    environment: {
+      // check if this env value exists
+      urlOrPath: 'URL_PATH',
+    },
+  },
+});
+
+```
+
+
+#### 6. Then to use the value from the config you can use two functions of the config object.
+
+**`getValue`** - get the value by key. Just to remind - it will be resolved this way:
+1. Get from CMD line option if exist
+2. Get from environment variable if provided
+3. Get from current config if exist in
+4. Get from text or autocomplete input if provided
+5. If still now value - return `undefined`
+
+```ts
+//Import your created config
+import {config} from './config.js'
+//Get type safe value type is value type or undefined if user won't provide any input
+const value = config.getValue('url')
+
+```
+
+**`getValueOrThrow`** - same as `getValue` but throws an error if value is not provided
+
+
+### Here's What the Full Code Should Look Like:
 
 ```sh
 npm i config-maker
 ```
 
-then create a config instance somewhere. For example in `config.ts` file.
 ```ts
 import { ConfigMaker } from 'config-maker';
 
@@ -78,26 +191,7 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
   },
 });
 
-
 ```
-Lets go throught this step by step. First generic parameter which in our case is `ProjectOptions` is what will be held inside config json file in the project folder using your CLI.
-
-Then `myConfig` is the config file name. It will be stored in users who is using the CLI that uses `config-maker`
-
-**`decoders`** - are only needed when a value is different type that string, but we want to encode it in the config.
-
-**`prompt`** - are optional messages that are used in text and/or in `autocomplete` prompts.
-
-**`autocomplete`** - functions returning an array of strings to be used inside autocomplete
-
-Then to use the value from the config you can use two functions of the config object.
-
-**`getValue`** - get the value by key. Just to remind - it will be resolved this way:
-1. Get from CMD line option if exist
-2. Get from environment variable if provided
-3. Get from current config if exist in
-4. Get from text or autocomplete input if provided
-5. If still now value - return `undefined`
 
 ```ts
 //Import your created config
@@ -106,5 +200,3 @@ import {config} from './config.js'
 const value = config.getValue('url')
 
 ```
-
-**`getValueOrThrow`** - same as `getValue` but throws an error if value is not provided
