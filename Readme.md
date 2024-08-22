@@ -40,13 +40,12 @@ npm i config-maker
 
 ```
 
+<br />
+
 #### 2. Create a config instance somewhere 
 
 As an example, you can do that in the `config.ts` file.
 
-`ProjectOptions` is the first generic parameter we are dealing with. It is what will be held inside the config json file in the project folder while using your CLI.
-
-Then `myConfig` is the config file name. It will be stored in users who is using the CLI that uses `config-maker`.
 
 ```ts
 import { ConfigMaker } from 'config-maker';
@@ -59,9 +58,16 @@ type ProjectOptions = {
 export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 
 ```
+<br />
 
-#### 3. (Optional)Add Decoders
-**`decoders`** - are only needed when a value is different type that string, but we want to encode it in the config.
+`ProjectOptions` is the first generic parameter you'll be dealing with. It is what will be stored inside the config json file in the project folder while using your CLI.
+
+`myConfig` is the name of the config file. It will be stored in the Users folder for those who use the CLI with the setting `config-maker`.
+
+<br />
+
+#### 3. (Optional) Add Decoders
+**`decoders`** - are only needed when you use non-string values, but you still want to encode them in the config.
 
 ```ts
 
@@ -73,6 +79,8 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
   },
 
 ```
+
+<br />
 
 #### 4. (Optional) Add Prompts
 **`prompt`** - are optional messages that are used in text and/or in `autocomplete` prompts.
@@ -94,12 +102,14 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 
 ```
 
-#### 5. Autocomplete
-**`autocomplete`** - functions returning an array of strings to be used inside autocomplete
+<br />
+
+#### 5. Add the Autocomplete Function
+**`autocomplete`** - are functions that return an array of strings to be used inside autocomplete
 
 ```ts
   config: {
-    // Autocomplete functions returns possible options
+    // autocomplete functions returns possible options
     autocomplete: {
       urlOrPath: async (p) => {
         // if the property vv is already set
@@ -118,28 +128,37 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 
 ```
 
+<br />
 
-#### 6. Then to use the value from the config you can use two functions of the config object.
+#### 6. Use the Values from the Config
 
-**`getValue`** - get the value by key. Just to remind - it will be resolved this way:
-1. Get from CMD line option if exist
-2. Get from environment variable if provided
-3. Get from current config if exist in
-4. Get from text or autocomplete input if provided
-5. If still now value - return `undefined`
+To use the value from the config, you can use two functions of the config object.
+
+![arrow-top](https://github.com/user-attachments/assets/3632196c-f2f8-46a2-9d3d-4a8071ca1908#gh-dark-mode-only) ![arrow-top-dark](https://github.com/user-attachments/assets/496077a7-85a9-44dc-8770-5a248d63886d#gh-light-mode-only) **`getValue`** - get the value by its key 
+
+> [!TIP]
+> As a reminder, it will be resolved this way:
+> 1. Get from CMD line option if exist
+> 2. Get from environment variable if provided
+> 3. Get from current config if exist in
+> 4. Get from text or autocomplete input if provided
+> 5. If still now value - return `undefined`
+
+<br />
+
+![arrow-top](https://github.com/user-attachments/assets/3632196c-f2f8-46a2-9d3d-4a8071ca1908#gh-dark-mode-only) ![arrow-top-dark](https://github.com/user-attachments/assets/496077a7-85a9-44dc-8770-5a248d63886d#gh-light-mode-only) **`getValueOrThrow`** - is the same as `getValue` but additionally throws an error if a value is not provided
 
 ```ts
-//Import your created config
+// import your created config
 import {config} from './config.js'
-//Get type safe value type is value type or undefined if user won't provide any input
+// get type-safe; if the user won't provide any input, the value type is by default: value type or undefined
 const value = config.getValue('url')
 
 ```
 
-**`getValueOrThrow`** - same as `getValue` but throws an error if value is not provided
+<br />
 
-
-### Here's What the Full Code Should Look Like:
+## 💬 Full Code
 
 ```sh
 npm i config-maker
@@ -174,7 +193,7 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
     vv: 1,
   },
   config: {
-    // Autocomplete functions returns possible options
+    // autocomplete functions returns possible options
     autocomplete: {
       urlOrPath: async (p) => {
         // if the property vv is already set
@@ -194,9 +213,9 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 ```
 
 ```ts
-//Import your created config
+// import your created config
 import {config} from './config.js'
-//Get type safe value type is value type or undefined if user won't provide any input
+// get type-safe; if the user won't provide any input, the value type is by default: value type or undefined 
 const value = config.getValue('url')
 
 ```
