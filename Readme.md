@@ -1,19 +1,19 @@
 ### CONFIG  MAKER ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/18e2f31f-a70f-4c3e-b284-3b66c989a15f)
-This is the config manager to use for your interactive CLI. <!--When you are making... - MISSING TEXT: when you are making what, exactly?-->
+Config Maker is a config manager to use for your interactive CLI. 
 
 <br />
 
-Features:
+## 📋 Features:
 - Making and consuming JSON config files
-- Inputing the  value in 4 different ways:
-    - as a cli option
+- Inputing the  value in four different ways:
+    - as a CLI option
     - as user input
     - as an autocomplete prompt
     - as an environment variable
 
 <br />
 
-## 📤 How the Values Are Fetched 
+## 📤 How Values Are Fetched 
 
 ```mermaid
 graph LR
@@ -31,9 +31,9 @@ graph LR
 <br />
 
 
-## 📖 How to - a Step by Step Guide
+## 📖 Step-by-Step Guide to Using Config Maker
 
-#### 1. Install the config-maker package
+### 1. Install the config-maker package
 
 ```sh
 npm i config-maker
@@ -42,10 +42,9 @@ npm i config-maker
 
 <br />
 
-#### 2. Create a config instance somewhere 
+### 2. Create a config instance 
 
-As an example, you can do that in the `config.ts` file.
-
+You can create the config instance anywhere, for example, in the `config.ts` file.
 
 ```ts
 import { ConfigMaker } from 'config-maker';
@@ -60,13 +59,12 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 ```
 <br />
 
-`ProjectOptions` is the first generic parameter you'll be dealing with. It is what will be stored inside the config json file in the project folder while using your CLI.
-
-`myConfig` is the name of the config file. It will be stored in the Users folder for those who use the CLI with the setting `config-maker`.
+The first generic paremeter you will be dealing with is `ProjectOptions`. This will be stored inside the config json file in the project folder while using your CLI.
+The config file is named `myConfig`. THis will be stored in the Users-folder for those use the CLI with the setting `config-maker`.
 
 <br />
 
-#### 3. (Optional) Add Decoders
+### 3. (Optional) Add Decoders
 **`decoders`** - are only needed when you use non-string values, but you still want to encode them in the config.
 
 ```ts
@@ -82,7 +80,7 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 
 <br />
 
-#### 4. (Optional) Add Prompts
+### 4. (Optional) Add Prompts
 **`prompt`** - are optional messages that are used in text and/or in `autocomplete` prompts.
 
 ```ts
@@ -104,7 +102,7 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 
 <br />
 
-#### 5. Add the Autocomplete Function
+### 5. Add the Autocomplete Function
 **`autocomplete`** - are functions that return an array of strings to be used inside autocomplete
 
 ```ts
@@ -130,11 +128,14 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 
 <br />
 
-#### 6. Use the Values from the Config
+### 6. Use the Values from the Config
 
-To use the value from the config, you can use two functions of the config object.
+The config object has two functions for retrieving values from the config.
 
-![arrow-top](https://github.com/user-attachments/assets/3632196c-f2f8-46a2-9d3d-4a8071ca1908#gh-dark-mode-only) ![arrow-top-dark](https://github.com/user-attachments/assets/496077a7-85a9-44dc-8770-5a248d63886d#gh-light-mode-only) **`getValue`** - get the value by its key 
+<br />
+
+#### ![arrow-top](https://github.com/user-attachments/assets/3632196c-f2f8-46a2-9d3d-4a8071ca1908#gh-dark-mode-only) ![arrow-top-dark](https://github.com/user-attachments/assets/496077a7-85a9-44dc-8770-5a248d63886d#gh-light-mode-only) OPTION 1:
+The `getValue` function retrieves the value by it's key.
 
 > [!TIP]
 > As a reminder, it will be resolved this way:
@@ -146,7 +147,8 @@ To use the value from the config, you can use two functions of the config object
 
 <br />
 
-![arrow-top](https://github.com/user-attachments/assets/3632196c-f2f8-46a2-9d3d-4a8071ca1908#gh-dark-mode-only) ![arrow-top-dark](https://github.com/user-attachments/assets/496077a7-85a9-44dc-8770-5a248d63886d#gh-light-mode-only) **`getValueOrThrow`** - is the same as `getValue` but additionally throws an error if a value is not provided
+#### ![arrow-top](https://github.com/user-attachments/assets/3632196c-f2f8-46a2-9d3d-4a8071ca1908#gh-dark-mode-only) ![arrow-top-dark](https://github.com/user-attachments/assets/496077a7-85a9-44dc-8770-5a248d63886d#gh-light-mode-only) OPTION 2:
+The `getValueOrThrow` function works the same as `getValue` but additionally throws an error if a value is not provided.
 
 ```ts
 // import your created config
