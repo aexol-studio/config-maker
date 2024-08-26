@@ -151,7 +151,7 @@ To use the value from the config, you can use two functions of the config object
 ```ts
 // import your created config
 import {config} from './config.js'
-// get type-safe; if the user won't provide any input, the value type is by default: value type or undefined
+// get type-safe; if no input is provided, the value type defaults to: value type or undefined
 const value = config.getValue('url')
 
 ```
@@ -215,7 +215,7 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 ```ts
 // import your created config
 import {config} from './config.js'
-// get type-safe; if the user won't provide any input, the value type is by default: value type or undefined 
+// get type-safe; if no input is provided, the value type defaults to: value type or undefined
 const value = config.getValue('url')
 
 ```
