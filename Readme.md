@@ -135,7 +135,7 @@ The config object has two functions for retrieving values from the config.
 <br />
 
 #### ![arrow-top](https://github.com/user-attachments/assets/3632196c-f2f8-46a2-9d3d-4a8071ca1908#gh-dark-mode-only) ![arrow-top-dark](https://github.com/user-attachments/assets/496077a7-85a9-44dc-8770-5a248d63886d#gh-light-mode-only) OPTION 1:
-The `getValue` function retrieves the value by it's key.
+The `getValue` function retrieves the value by its key.
 
 > [!TIP]
 > As a reminder, it will be resolved this way:
