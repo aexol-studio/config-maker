@@ -59,8 +59,8 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 ```
 <br />
 
-The first generic paremeter you will be dealing with is `ProjectOptions`. This will be stored inside the config json file in the project folder while using your CLI.
-The config file is named `myConfig`. THis will be stored in the Users-folder for those use the CLI with the setting `config-maker`.
+The first generic paremeter you will be dealing with is `ProjectOptions`. It will be stored inside the config json file in the project folder while using your CLI.
+The config file is named `myConfig`. It will be stored in the Users folder for those who use the CLI with the setting `config-maker`.
 
 <br />
 
@@ -130,7 +130,7 @@ The config file is named `myConfig`. THis will be stored in the Users-folder for
 
 ### 6. Use the Values from the Config
 
-The config object has two functions for retrieving values from the config.
+The config object has two ways of retrieving values from the config.
 
 <br />
 
