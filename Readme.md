@@ -4,7 +4,7 @@ Config Maker is a config manager to use for your interactive CLI.
 
 <br />
 
-## 📋&nbsp; Features:
+## 📋&nbsp; Features
 - Making and consuming JSON config files
 - Inputing the  value in four different ways:
     - as a CLI option
