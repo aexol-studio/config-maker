@@ -3,7 +3,7 @@ Config Maker is a config manager to use for your interactive CLI.
 
 <br />
 
-## 📋 Features:
+## 📋&nbsp; Features:
 - Making and consuming JSON config files
 - Inputing the  value in four different ways:
     - as a CLI option
@@ -13,7 +13,7 @@ Config Maker is a config manager to use for your interactive CLI.
 
 <br />
 
-## 📤 How Values Are Fetched 
+## 📤&nbsp; How Values Are Fetched 
 
 ```mermaid
 graph LR
@@ -31,7 +31,7 @@ graph LR
 <br />
 
 
-## 📖 Step-by-Step Guide to Using Config Maker
+## 📖&nbsp; Step-by-Step Guide to Using Config Maker
 
 ### 1. Install the config-maker package
 
@@ -160,7 +160,7 @@ const value = config.getValue('url')
 
 <br />
 
-## 💬 Full Code
+## 💬&nbsp; Full Code
 
 ```sh
 npm i config-maker
