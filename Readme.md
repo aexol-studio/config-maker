@@ -1,4 +1,5 @@
-### CONFIG  MAKER ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/93e38773-7467-4374-a9e8-13387aa5b076)
+### ![config maker idea](https://github.com/user-attachments/assets/66851261-87e1-41d2-8ed2-6201ae658d50) ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/93e38773-7467-4374-a9e8-13387aa5b076)
+
 Config Maker is a config manager to use for your interactive CLI. 
 
 <br />
