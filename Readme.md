@@ -34,7 +34,7 @@ graph LR
 
 ## 📖&nbsp; Step-by-Step Guide to Using Config Maker
 
-### 1. Install the config-maker package
+**1.** Install the config-maker package
 
 ```sh
 npm i config-maker
@@ -43,7 +43,7 @@ npm i config-maker
 
 <br />
 
-### 2. Create a config instance 
+**2.** Create a config instance 
 
 You can create the config instance anywhere, for example, in the `config.ts` file.
 
@@ -65,7 +65,8 @@ The config file is named `myConfig`. It will be stored in the Users folder for t
 
 <br />
 
-### 3. (Optional) Add Decoders
+**3.** (Optional) Add Decoders
+
 **`decoders`** - are only needed when you use non-string values, but you still want to encode them in the config.
 
 ```ts
@@ -81,7 +82,8 @@ The config file is named `myConfig`. It will be stored in the Users folder for t
 
 <br />
 
-### 4. (Optional) Add Prompts
+**4.** (Optional) Add Prompts
+
 **`prompt`** - are optional messages that are used in text and/or in `autocomplete` prompts.
 
 ```ts
@@ -103,7 +105,8 @@ The config file is named `myConfig`. It will be stored in the Users folder for t
 
 <br />
 
-### 5. Add the Autocomplete Function
+**5.** Add the Autocomplete Function
+
 **`autocomplete`** - are functions that return an array of strings to be used inside autocomplete
 
 ```ts
@@ -129,13 +132,13 @@ The config file is named `myConfig`. It will be stored in the Users folder for t
 
 <br />
 
-### 6. Use the Values from the Config
+**6.** Use the Values from the Config
 
 The config object has two ways of retrieving values from the config.
 
 <br />
 
-#### OPTION 1:
+- #### OPTION 1:
 The `getValue` function retrieves the value by its key.
 
 > [!TIP]
@@ -148,7 +151,7 @@ The `getValue` function retrieves the value by its key.
 
 <br />
 
-#### OPTION 2:
+- #### OPTION 2:
 The `getValueOrThrow` function works the same as `getValue` but additionally throws an error if a value is not provided.
 
 ```ts
