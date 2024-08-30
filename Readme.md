@@ -34,7 +34,7 @@ graph LR
 
 ## 📖&nbsp; Step-by-Step Guide to Using Config Maker
 
-**1.** Install the config-maker package
+First lets install the config-maker package
 
 ```sh
 npm i config-maker
@@ -43,7 +43,7 @@ npm i config-maker
 
 <br />
 
-**2.** Create a config instance 
+Now we need to create a config instance 
 
 You can create the config instance anywhere, for example, in the `config.ts` file.
 
@@ -56,18 +56,64 @@ type ProjectOptions = {
 };
 
 export const config = new ConfigMaker<ProjectOptions>('myConfig', {
+  decoders: {
+    vv: {
+      decode: (v) => parseInt(v),
+      encode: (v) => v + '',
+    },
+  },
+  // messages to be used for prompts
+  prompts: {
+    vv: {
+      message: 'Package version',
+    },
+    urlOrPath: {
+      message: 'Provide url or path to the file',
+    },
+  },
+  // default initial values
+  defaultValues: {
+    vv: 1,
+  },
+  config: {
+    // Autocomplete functions returns possible options
+    autocomplete: {
+      urlOrPath: async (p) => {
+        // if the property vv is already set
+        if (p.options.vv === 1) {
+          return ['https://aexol.com', 'https://space.com'];
+        }
+        return ['https://github.com', 'https://news.hacker.com'];
+      },
+    },
+    environment: {
+      // check if this env value exists
+      urlOrPath: 'URL_PATH',
+    },
+  },
+});
 
 ```
 <br />
 
-The first generic paremeter you will be dealing with is `ProjectOptions`. It will be stored inside the config json file in the project folder while using your CLI.
-The config file is named `myConfig`. It will be stored in the Users folder for those who use the CLI with the setting `config-maker`.
+**Now let's go through the config step by step:**
+
+**1.** The first generic paremeter you will be dealing with is `ProjectOptions`. It will be stored inside the config json file in the project folder while using your CLI.
+`myConfig` is the config file name. It will be stored in the users folder for those who use the CLI with the setting `config-maker`.
+```ts
+import { ConfigMaker } from 'config-maker';
+
+type ProjectOptions = {
+  urlOrPath: string;
+  vv: number;
+};
+```
 
 <br />
 
-**3.** (Optional) Add Decoders
+**2.** Decoders
 
-**`decoders`** - are only needed when you use non-string values, but you still want to encode them in the config.
+**`decoders`** - are only needed when a value is of a different type than that string, but we want to encode it in the config.
 
 ```ts
 
@@ -82,9 +128,9 @@ The config file is named `myConfig`. It will be stored in the Users folder for t
 
 <br />
 
-**4.** (Optional) Add Prompts
+**3.** Prompts
 
-**`prompt`** - are optional messages that are used in text and/or in `autocomplete` prompts.
+**`prompts`** - are optional messages that are used in text and/or in `autocomplete` prompts.
 
 ```ts
   // messages to be used for prompts
@@ -105,7 +151,7 @@ The config file is named `myConfig`. It will be stored in the Users folder for t
 
 <br />
 
-**5.** Add the Autocomplete Function
+**4.** Autocomplete
 
 **`autocomplete`** - are functions that return an array of strings to be used inside autocomplete
 
@@ -132,7 +178,7 @@ The config file is named `myConfig`. It will be stored in the Users folder for t
 
 <br />
 
-**6.** Use the Values from the Config
+## **Using the Values from the Config**
 
 The config object has two ways of retrieving values from the config.
 
@@ -143,80 +189,16 @@ The `getValue` function retrieves the value by its key.
 
 > [!TIP]
 > As a reminder, it will be resolved this way:
-> 1. Get from CMD line option if exist
+> 1. Get from CMD line option if it exists
 > 2. Get from environment variable if provided
-> 3. Get from current config if exist in
+> 3. Get from current config if exists in it
 > 4. Get from text or autocomplete input if provided
-> 5. If still now value - return `undefined`
+> 5. If still no value - return `undefined`
 
 <br />
 
 - #### OPTION 2:
 The `getValueOrThrow` function works the same as `getValue` but additionally throws an error if a value is not provided.
-
-```ts
-// import your created config
-import {config} from './config.js'
-// get type-safe; if no input is provided, the value type defaults to: value type or undefined
-const value = config.getValue('url')
-
-```
-
-<br />
-
-## 💬&nbsp; Full Code
-
-```sh
-npm i config-maker
-```
-
-```ts
-import { ConfigMaker } from 'config-maker';
-
-type ProjectOptions = {
-  urlOrPath: string;
-  vv: number;
-};
-
-export const config = new ConfigMaker<ProjectOptions>('myConfig', {
-  decoders: {
-    vv: {
-      decode: (v) => parseInt(v),
-      encode: (v) => v + '',
-    },
-  },
-  // messages to be used for prompts
-  prompts: {
-    vv: {
-      message: 'Package version',
-    },
-    urlOrPath: {
-      message: 'Provide url or path to the file',
-    },
-  },
-  // default initial values
-  defaultValues: {
-    vv: 1,
-  },
-  config: {
-    // autocomplete functions returns possible options
-    autocomplete: {
-      urlOrPath: async (p) => {
-        // if the property vv is already set
-        if (p.options.vv === 1) {
-          return ['https://aexol.com', 'https://space.com'];
-        }
-        return ['https://github.com', 'https://news.hacker.com'];
-      },
-    },
-    environment: {
-      // check if this env value exists
-      urlOrPath: 'URL_PATH',
-    },
-  },
-});
-
-```
 
 ```ts
 // import your created config
