@@ -16,16 +16,16 @@ Config Maker is a config manager to use for your interactive CLI.
 ## 📤&nbsp; How Values Are Fetched 
 
 ```mermaid
-graph LR
-    A[Option from the Command Line] --> AY[Exists]
-    AY --> R[Return Value]
+flowchart TD
+    A[Option from the Command Line] --Present--> R[Return Value]
     A --Not Present--->
-    D[Environment Variable] --> AY
+    D[Environment Variable] --Present--> R
     D --Not Present--->
-    E[In Config File] -->  AY
+    E[Variable In Config File] --Present-->   R
     E --Not Present--->
-    F[Prompt for the Input] --> R
+    F[Prompt User for Input] --> R
 
+    style R fill:#244d0e
 ```
 
 <br />
