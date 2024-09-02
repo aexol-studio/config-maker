@@ -1,5 +1,4 @@
-### ![config maker idea](https://github.com/user-attachments/assets/66851261-87e1-41d2-8ed2-6201ae658d50) ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/93e38773-7467-4374-a9e8-13387aa5b076)
-
+### ![config maker idea](https://github.com/user-attachments/assets/95c8e7b4-5a9b-4d98-906a-b9fcc6a2f216) ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/93e38773-7467-4374-a9e8-13387aa5b076#gh-dark-mode-only) ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/51b16a12-11c3-4b72-8f87-d78afdbe9c83#gh-light-mode-only)
 Config Maker is a config manager to use for your interactive CLI. 
 
 <br />
@@ -34,7 +33,13 @@ graph LR
 
 ## 📖&nbsp; Step-by-Step Guide to Using Config Maker
 
-First lets install the config-maker package
+
+> [!IMPORTANT]
+> Before you start, you need to set up a few things.
+
+<br />
+
+First, install the config-maker package:
 
 ```sh
 npm i config-maker
@@ -43,10 +48,13 @@ npm i config-maker
 
 <br />
 
-Now we need to create a config instance 
+Second, you need to create a config instance. 
 
-You can create the config instance anywhere, for example, in the `config.ts` file.
+You can create the config instance anywhere. For example, that can be done in the `config.ts` file.
 
+<br />
+
+### See the full code below: 
 ```ts
 import { ConfigMaker } from 'config-maker';
 
@@ -96,7 +104,7 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
 ```
 <br />
 
-**Now let's go through the config step by step:**
+### Follow the step-by-step tutorial for more details:
 
 **1.** The first generic paremeter you will be dealing with is `ProjectOptions`. It will be stored inside the config json file in the project folder while using your CLI.
 `myConfig` is the config file name. It will be stored in the users folder for those who use the CLI with the setting `config-maker`.
@@ -113,7 +121,7 @@ type ProjectOptions = {
 
 **2.** Decoders
 
-**`decoders`** - are only needed when a value is of a different type than that string, but we want to encode it in the config.
+They are only needed when a value is of a different type than that string, but we want to encode it in the config.
 
 ```ts
 
@@ -130,7 +138,7 @@ type ProjectOptions = {
 
 **3.** Prompts
 
-**`prompts`** - are optional messages that are used in text and/or in `autocomplete` prompts.
+They are are optional messages that are used in text and/or in `autocomplete` prompts.
 
 ```ts
   // messages to be used for prompts
@@ -153,7 +161,7 @@ type ProjectOptions = {
 
 **4.** Autocomplete
 
-**`autocomplete`** - are functions that return an array of strings to be used inside autocomplete
+These functions are used to return an array of strings to be used inside autocomplete.
 
 ```ts
   config: {
@@ -178,7 +186,7 @@ type ProjectOptions = {
 
 <br />
 
-## **Using the Values from the Config**
+## Using the Values from the Config
 
 The config object has two ways of retrieving values from the config.
 
