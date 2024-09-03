@@ -1,37 +1,60 @@
-# Config maker
+### ![config maker idea](https://github.com/user-attachments/assets/95c8e7b4-5a9b-4d98-906a-b9fcc6a2f216) ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/93e38773-7467-4374-a9e8-13387aa5b076#gh-dark-mode-only) ![Vector 902 (Stroke) (1)](https://github.com/user-attachments/assets/51b16a12-11c3-4b72-8f87-d78afdbe9c83#gh-light-mode-only)
+Config Maker is a config manager to use for your interactive CLI. 
 
-Config manager for your CLI. When you are making
+<br />
 
-Features:
-- make and consume JSON config files
-- give 4 chances to input the value: as an cli option, as user input, as an autocomplete prompt, as an environment variable
+## 📋&nbsp; Features
+- Making and consuming JSON config files
+- Inputing the  value in four different ways:
+    - as a CLI option
+    - as user input
+    - as an autocomplete prompt
+    - as an environment variable
 
-## How values are fetched 
+<br />
+
+## 📤&nbsp; How Values Are Fetched 
 
 ```mermaid
-graph LR
-    A[Option from command line] --> AY[Exists]
-    AY --> R[Return value]
-    A --Not present--->
-    D[Environment Variable] --> AY
-    D --Not present--->
-    E[In Config File] -->  AY
-    E --Not present--->
-    F[Prompt for input] --> R
+flowchart TD
+    A[Option from the Command Line] --Present--> R[Return Value]
+    A --Not Present--->
+    D[Environment Variable] --Present--> R
+    D --Not Present--->
+    E[Variable In Config File] --Present-->   R
+    E --Not Present--->
+    F[Prompt User for Input] --> R
+
+    style R fill:#244d0e
 ```
-## Where to use
 
-If you are making interactive CLI you can use config-maker. 
+<br />
 
-## How to use
 
-First of all install the config-maker package
+## 📖&nbsp; Step-by-Step Guide to Using Config Maker
+
+
+> [!IMPORTANT]
+> Before you start, you need to set up a few things.
+
+<br />
+
+First, install the config-maker package:
 
 ```sh
 npm i config-maker
+
 ```
 
-then create a config instance somewhere. For example in `config.ts` file.
+<br />
+
+Second, you need to create a config instance. 
+
+You can create the config instance anywhere. For example, that can be done in the `config.ts` file.
+
+<br />
+
+### See the full code below: 
 ```ts
 import { ConfigMaker } from 'config-maker';
 
@@ -78,33 +101,117 @@ export const config = new ConfigMaker<ProjectOptions>('myConfig', {
   },
 });
 
-
 ```
-Lets go throught this step by step. First generic parameter which in our case is `ProjectOptions` is what will be held inside config json file in the project folder using your CLI.
+<br />
 
-Then `myConfig` is the config file name. It will be stored in users who is using the CLI that uses `config-maker`
+### Follow the step-by-step tutorial for more details:
 
-**`decoders`** - are only needed when a value is different type that string, but we want to encode it in the config.
+**1.** The first generic paremeter you will be dealing with is `ProjectOptions`. It will be stored inside the config json file in the project folder while using your CLI.
+`myConfig` is the config file name. It will be stored in the users folder for those who use the CLI with the setting `config-maker`.
+```ts
+import { ConfigMaker } from 'config-maker';
 
-**`prompt`** - are optional messages that are used in text and/or in `autocomplete` prompts.
+type ProjectOptions = {
+  urlOrPath: string;
+  vv: number;
+};
+```
 
-**`autocomplete`** - functions returning an array of strings to be used inside autocomplete
+<br />
 
-Then to use the value from the config you can use two functions of the config object.
+**2.** Decoders
 
-**`getValue`** - get the value by key. Just to remind - it will be resolved this way:
-1. Get from CMD line option if exist
-2. Get from environment variable if provided
-3. Get from current config if exist in
-4. Get from text or autocomplete input if provided
-5. If still now value - return `undefined`
+They are only needed when a value is of a different type than that string, but we want to encode it in the config.
 
 ```ts
-//Import your created config
+
+  decoders: {
+    vv: {
+      decode: (v) => parseInt(v),
+      encode: (v) => v + '',
+    },
+  },
+
+```
+
+<br />
+
+**3.** Prompts
+
+They are are optional messages that are used in text and/or in `autocomplete` prompts.
+
+```ts
+  // messages to be used for prompts
+  prompts: {
+    vv: {
+      message: 'Package version',
+    },
+    urlOrPath: {
+      message: 'Provide url or path to the file',
+    },
+  },
+  // default initial values
+  defaultValues: {
+    vv: 1,
+  },
+
+```
+
+<br />
+
+**4.** Autocomplete
+
+These functions are used to return an array of strings to be used inside autocomplete.
+
+```ts
+  config: {
+    // autocomplete functions returns possible options
+    autocomplete: {
+      urlOrPath: async (p) => {
+        // if the property vv is already set
+        if (p.options.vv === 1) {
+          return ['https://aexol.com', 'https://space.com'];
+        }
+        return ['https://github.com', 'https://news.hacker.com'];
+      },
+    },
+    environment: {
+      // check if this env value exists
+      urlOrPath: 'URL_PATH',
+    },
+  },
+});
+
+```
+
+<br />
+
+## Using the Values from the Config
+
+The config object has two ways of retrieving values from the config.
+
+<br />
+
+- #### OPTION 1:
+The `getValue` function retrieves the value by its key.
+
+> [!TIP]
+> As a reminder, it will be resolved this way:
+> 1. Get from CMD line option if it exists
+> 2. Get from environment variable if provided
+> 3. Get from current config if exists in it
+> 4. Get from text or autocomplete input if provided
+> 5. If still no value - return `undefined`
+
+<br />
+
+- #### OPTION 2:
+The `getValueOrThrow` function works the same as `getValue` but additionally throws an error if a value is not provided.
+
+```ts
+// import your created config
 import {config} from './config.js'
-//Get type safe value type is value type or undefined if user won't provide any input
+// get type-safe; if no input is provided, the value type defaults to: value type or undefined
 const value = config.getValue('url')
 
 ```
-
-**`getValueOrThrow`** - same as `getValue` but throws an error if value is not provided
